@@ -104,3 +104,21 @@ class MyTest(unittest.TestCase):
         l1.insert_at_head(PlayerNode(p3))
         l1.delete_key("789")
         self.assertEqual(l1.head.player, p2)
+
+    def test_display_empty(self):
+        l1 = PlayerList()
+        l1.display()
+
+    def test_display_forward(self):
+        l1 = PlayerList()
+        l1.insert_at_head(PlayerNode(p1))
+        l1.insert_at_head(PlayerNode(p2))
+        l1.insert_at_head(PlayerNode(p3))
+        l1.display()
+
+    def test_display_backwards(self):
+        l1 = PlayerList()
+        l1.insert_at_head(PlayerNode(p1))
+        l1.insert_at_head(PlayerNode(p2))
+        l1.insert_at_head(PlayerNode(p3))
+        l1.display(False)

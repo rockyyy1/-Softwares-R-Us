@@ -114,7 +114,35 @@ class PlayerList:
         print("Key not found")
         raise ValueError(f"Key: {key} not found")
 
+    def display(self, forward : bool = True) -> None:
+        """Iterates over linked list and prints each node
 
+        Parameters
+        forward : bool
+            True prints list head to tail
+            False prints list tail to head"""
+        if self.is_empty:
+            print("List is empty")
+            return
+
+        elif forward:
+            print("Head -> Tail")
+            current_node = self.head
+            while current_node:
+                print(current_node.player.name, end="")
+                #if a next node exists
+                if current_node.next:
+                    print(" -> ", end="")
+                current_node = current_node.next
+        else:
+            print("Tail -> Head")
+            current_node = self.tail
+            while current_node:
+                print(current_node.player.name, end="")
+                #if a previous node exists
+                if current_node.previous:
+                    print(" -> ", end="")
+                current_node = current_node.previous
 
 
 
