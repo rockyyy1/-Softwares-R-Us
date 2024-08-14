@@ -11,6 +11,7 @@ from app.player_node import PlayerNode
 
 p1 = Player("123", "Rocky")
 p2 = Player("456", "Raf")
+p3 = Player("789", "Murray")
 
 class MyTest(unittest.TestCase):
     def test_return_true_if_empty(self):
@@ -55,3 +56,31 @@ class MyTest(unittest.TestCase):
         l1.insert_at_tail(PlayerNode(p1))
         l1.insert_at_tail(PlayerNode(p2))
         self.assertEqual(l1.tail.player, p2)
+
+# Unit testing with Exceptions Resource:
+# https://www.geeksforgeeks.org/test-if-a-function-throws-an-exception-in-python/
+    def test_delete_head_node_on_empty_list(self):
+        l1 = PlayerList()
+        with self.assertRaises(ValueError):
+            l1.delete_from_head()
+
+    def test_delete_tail_node_on_empty_list(self):
+        l1 = PlayerList()
+        with self.assertRaises(ValueError):
+            l1.delete_from_tail()
+
+    def test_delete_head_node(self):
+        l1 = PlayerList()
+        l1.insert_at_head(PlayerNode(p1))
+        l1.insert_at_head(PlayerNode(p2))
+        l1.insert_at_head(PlayerNode(p3))
+        l1.delete_from_head()
+        self.assertEqual(l1.head.player, p2)
+
+    def test_delete_tail_node(self):
+        l1 = PlayerList()
+        l1.insert_at_tail(PlayerNode(p3))
+        l1.insert_at_head(PlayerNode(p2))
+        l1.insert_at_tail(PlayerNode(p1))
+        l1.delete_from_tail()
+        self.assertEqual(l1.tail.player, p3)

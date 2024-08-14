@@ -53,3 +53,25 @@ class PlayerList:
             new_node.previous = self._tail
             self._tail = new_node
 
+    def delete_from_head(self) -> None:
+        """Delete a player from the head of the list."""
+        if self.is_empty:
+            raise ValueError("List is empty")
+        #single item in list
+        elif self._head == self._tail:
+            self._head = None
+            self._tail = None
+        else:
+            self._head = self._head.next
+            self._head.previous = None
+
+    def delete_from_tail(self) -> None:
+        """Delete a player from the tail of the list."""
+        if self.is_empty:
+            raise ValueError("List is empty")
+        elif self._head == self._tail:
+            self._head = None
+            self._tail = None
+        else:
+            self._tail = self._tail.previous
+            self._tail.next = None
