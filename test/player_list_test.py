@@ -17,14 +17,14 @@ class MyTest(unittest.TestCase):
         l1 =  PlayerList()
         self.assertTrue(l1.is_empty)
 
-    def test_add_to_empty_list(self):
+    def test_add_to_head_empty_list(self):
         l2 = PlayerList()
         print(l2.is_empty)
         l2.insert_at_head(PlayerNode(p1))
         print(l2.is_empty)
         self.assertFalse(l2.is_empty)
 
-    def test_add_to_not_empty_list(self):
+    def test_add_to_head_not_empty_list(self):
         l3 = PlayerList()
         print(l3.is_empty)
         l3.insert_at_head(PlayerNode(p1))
@@ -45,3 +45,13 @@ class MyTest(unittest.TestCase):
         l1.insert_at_head(PlayerNode(p2))
         self.assertEqual(l1.tail.player, p1)
 
+    def test_add_to_tail_empty_list(self):
+        l1 = PlayerList()
+        l1.insert_at_tail(PlayerNode(p1))
+        self.assertEqual(l1.tail.player, p1)
+
+    def test_add_to_tail_not_empty_list(self):
+        l1 = PlayerList()
+        l1.insert_at_tail(PlayerNode(p1))
+        l1.insert_at_tail(PlayerNode(p2))
+        self.assertEqual(l1.tail.player, p2)

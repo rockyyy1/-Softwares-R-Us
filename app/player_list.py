@@ -43,3 +43,13 @@ class PlayerList:
             self._head = new_node
             #print("List was not empty")
 
+    def insert_at_tail(self, new_node: PlayerNode) -> None:
+        """Insert a player at the tail of the list."""
+        if self.is_empty:
+            self._tail = new_node
+            self._head = new_node
+        else:
+            self._tail.next = new_node
+            new_node.previous = self._tail
+            self._tail = new_node
+
