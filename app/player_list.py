@@ -1,10 +1,38 @@
 from app.player_node import PlayerNode
 from typing import Generator, Self
 
-
 class PlayerList:
-    """A doubly linked list of player nodes"""
+    """
+    A doubly linked list to store PlayerNode objects.
 
+    Attributes:
+    _head : PlayerNode
+        The head node of the list.
+    _tail : PlayerNode
+        The tail node of the list.
+
+    Methods:
+    is_empty() -> bool
+        Returns True if the list is empty.
+    head() -> PlayerNode
+        Returns the head node of the list.
+    tail() -> PlayerNode
+        Returns the tail node of the list.
+    insert_at_head(new_node: PlayerNode) -> None
+        Inserts a new node at the head of the list.
+    insert_at_tail(new_node: PlayerNode) -> None
+        Inserts a new node at the tail of the list.
+    delete_from_head() -> None
+        Deletes the node at the head of the list.
+    delete_from_tail() -> None
+        Deletes the node at the tail of the list.
+    __iter__() -> Generator[PlayerNode, None, None]
+        Iterates over the nodes in the linked list.
+    delete_key(key: str) -> None
+        Deletes the node with the given key from the list.
+    display(forward: bool = True) -> None
+        Prints the nodes in the linked list in the specified order.
+    """
     def __init__(self, head: PlayerNode = None, tail : PlayerNode = None) -> None:
         """Constructs a PlayerList object.
 
