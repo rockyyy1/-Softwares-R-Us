@@ -61,12 +61,12 @@ class MyTest(unittest.TestCase):
 # https://www.geeksforgeeks.org/test-if-a-function-throws-an-exception-in-python/
     def test_delete_head_node_on_empty_list(self):
         l1 = PlayerList()
-        with self.assertRaises(ValueError):
+        with self.assertRaises(IndexError):
             l1.delete_from_head()
 
     def test_delete_tail_node_on_empty_list(self):
         l1 = PlayerList()
-        with self.assertRaises(ValueError):
+        with self.assertRaises(IndexError):
             l1.delete_from_tail()
 
     def test_delete_head_node(self):
@@ -84,3 +84,23 @@ class MyTest(unittest.TestCase):
         l1.insert_at_tail(PlayerNode(p1))
         l1.delete_from_tail()
         self.assertEqual(l1.tail.player, p3)
+
+    def test_deleting_key_empty_list(self):
+        l1 = PlayerList()
+        with self.assertRaises(IndexError):
+            l1.delete_key("123")
+
+    def test_deleting_key_no_key_found(self):
+        l1 = PlayerList()
+        l1.insert_at_head(PlayerNode(p1))
+        l1.insert_at_head(PlayerNode(p2))
+        with self.assertRaises(ValueError):
+            l1.delete_key("blahblahblah")
+
+    def test_deleting_key(self):
+        l1 = PlayerList()
+        l1.insert_at_head(PlayerNode(p1))
+        l1.insert_at_head(PlayerNode(p2))
+        l1.insert_at_head(PlayerNode(p3))
+        l1.delete_key("789")
+        self.assertEqual(l1.head.player, p2)

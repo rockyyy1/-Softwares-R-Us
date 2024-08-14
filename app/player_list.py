@@ -1,4 +1,5 @@
 from app.player_node import PlayerNode
+from typing import Generator, Self
 
 
 class PlayerList:
@@ -56,7 +57,7 @@ class PlayerList:
     def delete_from_head(self) -> None:
         """Delete a player from the head of the list."""
         if self.is_empty:
-            raise ValueError("List is empty")
+            raise IndexError("List is empty")
         #single item in list
         elif self._head == self._tail:
             self._head = None
@@ -68,10 +69,52 @@ class PlayerList:
     def delete_from_tail(self) -> None:
         """Delete a player from the tail of the list."""
         if self.is_empty:
-            raise ValueError("List is empty")
+            raise IndexError("List is empty")
         elif self._head == self._tail:
             self._head = None
             self._tail = None
         else:
             self._tail = self._tail.previous
             self._tail.next = None
+
+# trying this Generator thing out:
+# Resource: https://github.com/NM-TAFE/diploma-adv-prog-python/blob/2024/s2/raf/joo/simple-linked-list/src/linked_list.py
+    def __iter__(self) -> Generator[PlayerNode, None, None]:
+        """iteration over the nodes in the linked list using a for loop"""
+        node = self._head
+        while node is not None:
+            yield node
+            node = node.next
+
+    def delete_key(self, key : str) -> None:
+        """Delete a player node from the list with a given key"""
+        if self.is_empty:
+            raise IndexError("List is empty")
+
+        for node in self:
+            if node.key == key:
+                print("Key found")
+                # if the node has a previous node, make that node's NEXT node the removed one's next
+                if node.previous:
+                    node.previous.next = node.next
+
+                # if the node is at the head, make the next node the head
+                else:
+                    self._head = node.next
+
+                # if the node has a next node, make the node's previous the removed one's previous
+                if node.next:
+                    node.next.previous = node.previous
+
+                # if the node is at the tail, make the previous the tail
+                else:
+                    self._tail = node.previous
+                return
+
+        print("Key not found")
+        raise ValueError(f"Key: {key} not found")
+
+
+
+
+
