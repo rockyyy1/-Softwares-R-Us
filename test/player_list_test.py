@@ -33,3 +33,15 @@ class MyTest(unittest.TestCase):
         print(l3.is_empty)
         self.assertFalse(l3.is_empty)
 
+    def test_return_head_node(self):
+        l1 = PlayerList()
+        l1.insert_at_head(PlayerNode(p1))
+        l1.insert_at_head(PlayerNode(p2))
+        self.assertEqual(l1.head.player, p2)
+
+    def test_return_tail_node(self):
+        l1 = PlayerList()
+        l1.insert_at_head(PlayerNode(p1))
+        l1.insert_at_head(PlayerNode(p2))
+        self.assertEqual(l1.tail.player, p1)
+
