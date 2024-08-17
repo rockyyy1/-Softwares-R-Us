@@ -1,22 +1,19 @@
+from __future__ import annotations
+
 from app.player import Player
 
+# Resources used for setter/getters:
+# https://github.com/NM-TAFE/diploma-adv-prog-python/blob/2024/s2/raf/joo/simple-linked-list/src/node.py
 
 class PlayerNode:
-    """A class to represent a node in a doubly linked list which stores player objects
+    """
+    A class to represent a node in a doubly linked list which stores player objects
 
     Attributes
-    player : Player
-        The player object associated with this node.
-    previous : PlayerNode or None
-        The previous node in the linked list.
-    next : PlayerNode or None
-        The next node in the linked list.
-    key : str
-        The string representation of the uid of the player object.
-
-    Methods
-    __str__():
-        Returns a string representation of the node.
+        player (Player) : The player object associated with this node.
+        previous (PlayerNode or None) : The previous node in the linked list.
+        next (PlayerNode or None) : The next node in the linked list.
+        key (str) : The string representation of the uid of the player object.
     """
 
     def __init__(self, player: Player):
@@ -31,30 +28,34 @@ class PlayerNode:
         return self._player
 
     @property
-    def next(self):
+    def next(self) -> PlayerNode | None:
         """Returns the next node in the linked list"""
         return self._next
 
     @next.setter
-    def next(self, next_node):
+    def next(self, node : PlayerNode | None) -> None:
         """Sets the next node in the linked list"""
-        self._next = next_node
+        if not isinstance(node, (PlayerNode, type(None))):
+            raise TypeError("Next must be a Node instance or None.")
+        self._next = node
 
     @property
-    def previous(self):
+    def previous(self) -> PlayerNode | None:
         """Returns the previous node in the linked list"""
         return self._previous
 
     @previous.setter
-    def previous(self, previous_node):
+    def previous(self, node : PlayerNode | None) -> None:
         """Sets the previous node in the linked list"""
-        self._previous = previous_node
+        if not isinstance(node, (PlayerNode, type(None))):
+            raise TypeError("Previous must be a Node instance or None.")
+        self._previous = node
 
     @property
-    def key(self):
+    def key(self) -> str:
         """Returns the string representation of the uid of the player object"""
         return self._player.uid
 
-    def __str__(self):
+    def __str__(self) -> str:
         """string representing the node object"""
         return f"Node: {self._player}"

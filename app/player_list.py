@@ -1,49 +1,27 @@
+from __future__ import annotations
+
 from app.player_node import PlayerNode
-from typing import Generator, Self
+from typing import Generator
+
 
 class PlayerList:
-    """
-    A doubly linked list to store PlayerNode objects.
+    """A class representing a doubly linked list of PlayerNodes.
 
-    Attributes:
-    _head : PlayerNode
-        The head node of the list.
-    _tail : PlayerNode
-        The tail node of the list.
+        Attributes:
+            _head (PlayerNode): The head node of the list.
+            _tail (PlayerNode): The tail node of the list.
 
-    Methods:
-    is_empty() -> bool
-        Returns True if the list is empty.
-    head() -> PlayerNode
-        Returns the head node of the list.
-    tail() -> PlayerNode
-        Returns the tail node of the list.
-    insert_at_head(new_node: PlayerNode) -> None
-        Inserts a new node at the head of the list.
-    insert_at_tail(new_node: PlayerNode) -> None
-        Inserts a new node at the tail of the list.
-    delete_from_head() -> None
-        Deletes the node at the head of the list.
-    delete_from_tail() -> None
-        Deletes the node at the tail of the list.
-    __iter__() -> Generator[PlayerNode, None, None]
-        Iterates over the nodes in the linked list.
-    delete_key(key: str) -> None
-        Deletes the node with the given key from the list.
-    display(forward: bool = True) -> None
-        Prints the nodes in the linked list in the specified order.
+    Note: Docstrings were generated with the help of AI, but edited to fit Google Style https://www.sphinx-doc.org/en/master/usage/extensions/example_google.html#example-google
     """
-    def __init__(self, head: PlayerNode = None, tail : PlayerNode = None) -> None:
+    def __init__(self, _head: PlayerNode | None = None, _tail : PlayerNode | None = None) -> None:
         """Constructs a PlayerList object.
 
         Parameters
-        head : PlayerNode or None
-            The head node of the list (default is None).
-        tail : PlayerNode or None
-            The end node of the list (default is None).
+        head (PlayerNode or None) : The head node of the list (default is None).
+        tail (PlayerNode or None) : The end node of the list (default is None).
         """
-        self._head = head
-        self._tail = tail
+        self._head = _head
+        self._tail = _tail
 
     @property
     def is_empty(self) -> bool:
@@ -51,12 +29,12 @@ class PlayerList:
         return self._head is None
 
     @property
-    def head(self) -> PlayerNode:
+    def head(self) -> PlayerNode | None:
         """Returns the head node of the list"""
         return self._head
 
     @property
-    def tail(self) -> PlayerNode:
+    def tail(self) -> PlayerNode | None:
         """Returns the tail node of the list"""
         return self._tail
 
@@ -120,6 +98,7 @@ class PlayerList:
             raise IndexError("List is empty")
 
         for node in self:
+            # Used AI to help me understand better, code comments are my own
             if node.key == key:
                 print("Key found")
                 # if the node has a previous node, make that node's NEXT node the removed one's next
@@ -140,37 +119,44 @@ class PlayerList:
                 return
 
         print("Key not found")
-        raise ValueError(f"Key: {key} not found")
+        raise KeyError(f"Key: {key} not found")
 
-    def display(self, forward : bool = True) -> None:
+#Refactor display such that you do need to repeat basically the same pattern for forward and backward
+    def display(self, forward : bool = True) -> str:
         """Iterates over linked list and prints each node
 
         Parameters
         forward : bool
             True prints list head to tail
             False prints list tail to head"""
+        display_output = ""
         if self.is_empty:
-            print("List is empty")
-            return
-
-        elif forward:
-            print("Head -> Tail")
-            current_node = self.head
-            while current_node:
-                print(current_node.player.name, end="")
-                #if a next node exists
-                if current_node.next:
-                    print(" -> ", end="")
-                current_node = current_node.next
+            display_output += "List is empty"
         else:
-            print("Tail -> Head")
-            current_node = self.tail
+            # if forward:
+            #     display_output += "Head -> Tail\n"
+            #     current_node = self._head
+            #     node_to_get = "next"
+            # else:
+            #     display_output += "Tail -> Head\n"
+            #     current_node = self._tail
+            #     node_to_get = "previous"
+
+            #My code above - Used AI to help learn  make it more pythonic
+            display_output += "Head -> Tail\n" if forward else "Tail -> Head\n"
+            current_node = self._head if forward else self._tail
+            node_to_get = "next" if forward else "previous"
+
             while current_node:
-                print(current_node.player.name, end="")
-                #if a previous node exists
-                if current_node.previous:
-                    print(" -> ", end="")
-                current_node = current_node.previous
+                display_output += getattr(current_node.player, "player_name")
+                #check if the next 'node to get' (either next or previous) exists - to print an arrow
+                if getattr(current_node, node_to_get):
+                    display_output += " -> "
+                #set the next node to get (next or previous)
+                current_node = getattr(current_node, node_to_get)
+
+        print(display_output)
+        return display_output
 
 
 
