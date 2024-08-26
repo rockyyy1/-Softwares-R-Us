@@ -3,7 +3,6 @@ from __future__ import annotations
 from app.player_node import PlayerNode
 from typing import Generator
 
-
 class PlayerList:
     """A class representing a doubly linked list of PlayerNodes.
 
@@ -37,6 +36,14 @@ class PlayerList:
     def tail(self) -> PlayerNode | None:
         """Returns the tail node of the list"""
         return self._tail
+
+    def __len__(self):
+        count = 0
+        node = self.head
+        while node:
+            count += 1
+            node = node.next
+        return count
 
     def insert_at_head(self, new_node: PlayerNode) -> None:
         """Insert a player at the head of the list."""
@@ -94,13 +101,13 @@ class PlayerList:
 
     def delete_key(self, key : str) -> None:
         """Delete a player node from the list with a given key"""
-        if self.is_empty:
-            raise IndexError("List is empty")
+        # if self.is_empty:
+        #     raise IndexError("List is empty")
 
         for node in self:
             # Used AI to help me understand better, code comments are my own
             if node.key == key:
-                print("Key found")
+                #print("Key found")
                 # if the node has a previous node, make that node's NEXT node the removed one's next
                 if node.previous:
                     node.previous.next = node.next
@@ -118,7 +125,7 @@ class PlayerList:
                     self._tail = node.previous
                 return
 
-        print("Key not found")
+        #print("Key not found")
         raise KeyError(f"Key: {key} not found")
 
 #Refactor display such that you do need to repeat basically the same pattern for forward and backward
@@ -157,6 +164,5 @@ class PlayerList:
 
         print(display_output)
         return display_output
-
 
 
