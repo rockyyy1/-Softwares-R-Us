@@ -127,13 +127,18 @@ class Player:
 
     @staticmethod
     def sort_players_by_score(players_list : list) -> list:
-        """Sorts the players by their score in descending order using Quicksort"""
+        """Sorts the players by their score in descending order using Quicksort
+
+        I chose this sorting algorithm because I liked the simple "divide and conquer" approach.
+        From my research, it is one of the fastest sorting algo's and after seeing some video's in action:
+        https://www.youtube.com/shorts/qqA2slRGHa8
+        I wanted to test and implement it myself.
+        """
         # create a copy so original remains the same
         players_list_copy = players_list[:]
 
         # if length of array is 1, just return it
-        length = len(players_list_copy)
-        if length <= 1:
+        if len(players_list_copy) <= 1:
             return players_list_copy
         else:
             #pivot is the last item in list -- remove at same time
