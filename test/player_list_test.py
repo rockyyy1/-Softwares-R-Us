@@ -87,7 +87,7 @@ class MyTest(unittest.TestCase):
 
     def test_deleting_key_empty_list(self):
         lst = PlayerList()
-        with self.assertRaises(IndexError):
+        with self.assertRaises(KeyError):
             lst.delete_key("123")
 
     def test_deleting_key_no_key_found(self):
