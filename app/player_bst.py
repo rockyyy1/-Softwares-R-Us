@@ -1,34 +1,11 @@
 from __future__ import annotations
 from typing import Optional
+from app.player_bnode import PlayerBNode
 
 
-# node can be of any given type.
-class Node[T]:
-    def __init__(self, value: T) -> None:
-        self.value = value
-        self.left_node: Node[T] | None = None
-        self.right_node: Optional[Node[T]] = None
-
-    def __lt__(self, other: Node[T]) -> bool:
-        if hasattr(other, 'value'):
-            return self.value < other.value
-        else:
-            return self.value < other
-
-    def __eq__(self, other: Node[T]) -> bool:
-        if hasattr(other, 'value'):
-            return self.value == other.value
-        else:
-            return self.value == other
-
-    def __repr__(self) -> str:
-        class_name = type(self).__name__
-        return f'{class_name}({self.value})'
-
-
-class BST[T]:
+class PlayerBST[T]:
     def __init__(self):
-        self.root: Node[T] | None = None
+        self.root: PlayerBNode[T] | None = None
 
     def insert(self, value: T,
                _current_node: Node | None = None):
