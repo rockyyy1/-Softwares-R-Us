@@ -1,7 +1,8 @@
 import unittest
+import random
 
 from app.player_bnode import PlayerBNode
-from app.player_bst import PlayerBST
+from app.player_bst import PlayerBST, is_valid_bst
 from app.player import Player
 
 
@@ -41,8 +42,11 @@ class TestBST(unittest.TestCase):
         self.assertEqual(self.bst.root.right.right._player, self.player1)
 
     def test_subtrees_are_BST(self):
-        players = [self.player1, self.player2, self.player3, self.player4]
+        players = [Player(f"{i}", f"Player #{i}") for i in range(100)]
         for player in players:
             self.bst.insert(player)
-        self.assertIsInstance(self.bst, PlayerBST)
-        self.assertIsInstance(self.bst.root.right, PlayerBST)
+            # print(player.player_name)
+        self.assertTrue(is_valid_bst(node = self.bst.root))
+        self.assertTrue(is_valid_bst(node = self.bst.root.right))
+        self.assertTrue(is_valid_bst(node = self.bst.root.left))
+
