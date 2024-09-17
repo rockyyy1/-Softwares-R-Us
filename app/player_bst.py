@@ -10,13 +10,8 @@ class PlayerBST:
         self.root: PlayerBNode | None = None
 
     def insert(self, player : Player,
-               _current_node: PlayerBNode | None = None):
-
-        if _current_node and self.root is None:
-            raise ValueError("Cannot insert")
-
-        if not isinstance(_current_node, PlayerBNode):
-            raise TypeError("Not a PlayerBNode")
+               _current_node: PlayerBNode | None = None) -> None:
+        """Inserts a player into a binary search tree"""
 
         # create a new node of the player
         if self.root is None:
@@ -28,14 +23,16 @@ class PlayerBST:
         if player.player_name < current_node.player.player_name:
             if current_node.left is None:
                 current_node.left = PlayerBNode(player)
-                return
-            self.insert(player, current_node.left)
-
-        else:
+            else:
+                self.insert(player, current_node.left)
+        elif player.player_name > current_node.player.player_name:
             if current_node.right is None:
                 current_node.right = PlayerBNode(player)
-                return
-            self.insert(player, current_node.right)
+            else:
+                self.insert(player, current_node.right)
+        else:
+            print(f"Player '{player.player_name}' already exists.")
+            current_node.player = player
 
 
 player1 = Player(uid = "001", player_name = "Bulbasaur")
