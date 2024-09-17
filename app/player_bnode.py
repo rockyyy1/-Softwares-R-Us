@@ -10,8 +10,8 @@ class PlayerBNode:
         self._right : Optional[PlayerBNode] = None
 
     @property
-    def player(self) -> str:
-        return self._player.player_name
+    def player(self) -> Player:
+        return self._player
 
     @player.setter
     def player(self, player : str) -> None:
@@ -37,17 +37,17 @@ class PlayerBNode:
         class_name = type(self).__name__
         return f'{class_name}({self.player.player_name})'
 
-    def __lt__(self, other: PlayerBNode) -> bool:
-        if isinstance(other, PlayerBNode):
-            return self.player.player_name < other.player.player_name
-        return NotImplemented
-
-    def __gt__(self, other: PlayerBNode) -> bool:
-        if isinstance(other, PlayerBNode):
-            return self.player.player_name > other.player.player_name
-        return NotImplemented
-
-    def __eq__(self, other: object) -> bool:
-        if isinstance(other, PlayerBNode):
-            return self.player.player_name == other.player.player_name
-        return False
+    # def __lt__(self, other: PlayerBNode) -> bool:
+    #     if isinstance(other, PlayerBNode) or isinstance(other, str):
+    #         return self.player.player_name < other.player.player_name
+    #     return NotImplemented
+    #
+    # def __gt__(self, other: PlayerBNode) -> bool:
+    #     if isinstance(other, PlayerBNode) or isinstance(other, str):
+    #         return self.player.player_name > other.player.player_name
+    #     return NotImplemented
+    #
+    # def __eq__(self, other: object) -> bool:
+    #     if isinstance(other, PlayerBNode) or isinstance(other, str):
+    #         return self.player.player_name == other.player.player_name
+    #     return False

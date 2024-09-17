@@ -19,12 +19,12 @@ class PlayerBST:
 
         current_node = _current_node or self.root
 
-        if player.player_name < current_node.player:
+        if player.player_name.lower() < current_node.player.player_name.lower():
             if current_node.left is None:
                 current_node.left = PlayerBNode(player)
             else:
                 self.insert(player, current_node.left)
-        elif player.player_name > current_node.player:
+        elif player.player_name.lower() > current_node.player.player_name.lower():
             if current_node.right is None:
                 current_node.right = PlayerBNode(player)
             else:
@@ -33,17 +33,30 @@ class PlayerBST:
             print(f"Player '{player.player_name}' already exists.")
             current_node.player = player
 
-# This function was written by A.I to validate if a node in a bst is a bst
-def is_valid_bst(node: Optional[PlayerBNode], min_value: Optional[str] = None,
-                 max_value: Optional[str] = None) -> bool:
-    if node is None:
-        return True
+    def search(self, name : str, current_node : PlayerBNode | None = None) -> Player | None:
+        """Searches for a player in the binary search tree"""
+        if self.root is None:
+            return None
 
-    # Check if the current player's name violates the min/max constraint
-    if ((min_value is not None and node.player <= min_value) or
-            (max_value is not None and node.player >= max_value)):
-        return False
+        if current_node is None:
+            current_node = self.root
 
-    # Recursively check the left and right subtrees with updated constraints
-    return (is_valid_bst(node.left, min_value, node.player) and
-            is_valid_bst(node.right, node.player, max_value))
+        if current_node is None:
+            return None
+
+        name_lower = name.lower()
+        current_name_lower = current_node.player.player_name.lower()
+
+        if name_lower == current_name_lower:
+            return current_node.player
+
+        if name_lower < current_name_lower:
+            if current_node.left is not None:
+                return self.search(name, current_node.left)
+            else:
+                return None
+        else:
+            if current_node.right is not None:
+                return self.search(name, current_node.right)
+            else:
+                return None
