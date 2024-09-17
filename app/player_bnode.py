@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Optional
-from app.player import  Player
+
+from app.player import Player
 
 class PlayerBNode:
     def __init__(self, player : Player) -> None:
@@ -9,12 +10,12 @@ class PlayerBNode:
         self._right : Optional[PlayerBNode] = None
 
     @property
-    def player(self) -> Player:
-        return self._player
+    def player(self) -> str:
+        return self._player.player_name
 
     @player.setter
-    def player(self, player: Player) -> None:
-        self._player = player
+    def player(self, player : str) -> None:
+        self._player.player_name = player
 
     @property
     def left(self) -> Optional[PlayerBNode]:
@@ -34,16 +35,19 @@ class PlayerBNode:
 
     def __repr__(self) -> str:
         class_name = type(self).__name__
-        return f'{class_name}({self.player})'
+        return f'{class_name}({self.player.player_name})'
 
-    def __lt__(self, other: 'PlayerBNode') -> bool:
-        if hasattr(other, 'player'):
+    def __lt__(self, other: PlayerBNode) -> bool:
+        if isinstance(other, PlayerBNode):
             return self.player.player_name < other.player.player_name
+        return NotImplemented
 
-    def __eq__(self, other):
-        if hasattr(other, 'player'):
-            return self.player.player_name == other.player.player_name
-
-    def __gt__(self, other: 'PlayerBNode') -> bool:
-        if hasattr(other, 'player'):
+    def __gt__(self, other: PlayerBNode) -> bool:
+        if isinstance(other, PlayerBNode):
             return self.player.player_name > other.player.player_name
+        return NotImplemented
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, PlayerBNode):
+            return self.player.player_name == other.player.player_name
+        return False
