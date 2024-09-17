@@ -10,9 +10,9 @@ class TestBST(unittest.TestCase):
     def setUp(self):
         self.bst = PlayerBST()
         self.player1 = Player(uid = "001", player_name= "Bulbasaur")
-        self.player4 = Player(uid = "004", player_name= "Charmander")
         self.player2 = Player(uid = "002", player_name= "Ivysaur")
         self.player3 = Player(uid = "003", player_name= "Venasaur")
+        self.player4 = Player(uid = "004", player_name= "Charmander")
 
     def test_insert_empty(self):
         self.bst.insert(player = self.player1)
@@ -56,4 +56,14 @@ class TestBST(unittest.TestCase):
         self.bst.insert(player = self.player1)
         self.assertIsNone(self.bst.search("Pikachu"))
         self.assertEqual(self.bst.search("Squirtle"), None)
+
+    def test_sorted_list(self):
+        self.bst.insert(self.player1)
+        self.bst.insert(self.player2)
+        self.bst.insert(self.player3)
+        self.bst.insert(self.player4)
+
+        sorted_nodes = self.bst.sorted_list()
+        sorted_names = [node.player.player_name for node in sorted_nodes]
+        self.assertEqual(sorted_names, sorted(sorted_names))
 
