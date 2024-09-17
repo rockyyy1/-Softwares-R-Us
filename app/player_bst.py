@@ -10,29 +10,28 @@ class PlayerBST:
         self.root: PlayerBNode | None = None
 
     def insert(self, player : Player) -> None:
-        if _current_node and self.root is None:
-            raise ValueError("Cannot insert")
-
-        if not isinstance(_current_node, Node):
-            raise TypeError("Not a Node")
-
-        # create a new node of the value
+        # create a new node of the player
         if self.root is None:
-            self.root = Node(value)
+            self.root = PlayerBNode(player)
             return
-        current_node = _current_node or self.root
 
-        if value < current_node:
-            if current_node.left_node is None:
-                current_node.left_node = Node(value)
+        current_node = self.root
+
+        # left subtree
+        if player.player_name < current_node.player.player_name:
+            if current_node.left is None:
+                current_node.left = PlayerBNode(player)
                 return
-            self.insert(value, current_node.left_node)
+            self.insert(current_node.player)
 
+        # right subtree
         else:
-            if current_node.right_node is None:
-                current_node.right_node = Node(value)
+            if current_node.right is None:
+                current_node.right = PlayerBNode(player)
                 return
-            self.insert(value, current_node.right_node)
+            self.insert(current_node.player)
+
+
 
 player1 = Player(uid = "001", player_name = "Bulbasaur")
 bst = PlayerBST()

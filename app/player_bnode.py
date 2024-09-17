@@ -31,3 +31,19 @@ class PlayerBNode:
     @right.setter
     def right(self, node: Optional[PlayerBNode]) -> None:
         self._right = node
+
+    def __repr__(self) -> str:
+        class_name = type(self).__name__
+        return f'{class_name}({self.player})'
+
+    def __lt__(self, other: 'PlayerBNode') -> bool:
+        if hasattr(other, 'player'):
+            return self.player.player_name < other.player.player_name
+
+    def __eq__(self, other):
+        if hasattr(other, 'player'):
+            return self.player.player_name == other.player.player_name
+
+    def __gt__(self, other: 'PlayerBNode') -> bool:
+        if hasattr(other, 'player'):
+            return self.player.player_name > other.player.player_name
