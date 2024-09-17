@@ -1,14 +1,15 @@
 from __future__ import annotations
 from typing import Optional
+
+from app.player import Player
 from app.player_bnode import PlayerBNode
 
 
-class PlayerBST[T]:
+class PlayerBST:
     def __init__(self):
-        self.root: PlayerBNode[T] | None = None
+        self.root: PlayerBNode | None = None
 
-    def insert(self, value: T,
-               _current_node: Node | None = None):
+    def insert(self, player : Player) -> None:
         if _current_node and self.root is None:
             raise ValueError("Cannot insert")
 
@@ -33,7 +34,6 @@ class PlayerBST[T]:
                 return
             self.insert(value, current_node.right_node)
 
-
-bst = BST()
-bst.insert(Node(1))
-bst.insert(Node(2), Node(1))
+player1 = Player(uid = "001", player_name = "Bulbasaur")
+bst = PlayerBST()
+bst.insert(player1)

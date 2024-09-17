@@ -9,25 +9,25 @@ class PlayerBNode:
         self._right : Optional[PlayerBNode] = None
 
     @property
-    def get_player(self) -> Player:
+    def player(self) -> Player:
         return self._player
 
-    @set_player.setter
-    def set_player(self, player: Player) -> None:
+    @player.setter
+    def player(self, player: Player) -> None:
         self._player = player
 
     @property
-    def get_left(self) -> Optional[PlayerBNode]:
+    def left(self) -> Optional[PlayerBNode]:
         return self._left
 
-    @set_left.setter
-    def set_left(self, node: Optional[PlayerBNode]) -> None:
+    @left.setter
+    def left(self, node: Optional[PlayerBNode]) -> None:
         self._left = node
 
     @property
-    def get_right(self) -> Optional[PlayerBNode]:
+    def right(self) -> Optional[PlayerBNode]:
         return self._right
 
-    @set_right.setter
-    def set_right(self, node: Optional[PlayerBNode]) -> None:
+    @right.setter
+    def right(self, node: Optional[PlayerBNode]) -> None:
         self._right = node
