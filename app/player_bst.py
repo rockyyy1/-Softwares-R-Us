@@ -7,6 +7,7 @@ from app.player_bnode import PlayerBNode
 
 class PlayerBST:
     def __init__(self):
+        """Initializes an empty binary tree"""
         self.root: PlayerBNode | None = None
 
     def insert(self, player : Player,
@@ -20,12 +21,12 @@ class PlayerBST:
 
         current_node = _current_node or self.root
 
-        if player.player_name < current_node.player.player_name:
+        if player.player_name < current_node.player:
             if current_node.left is None:
                 current_node.left = PlayerBNode(player)
             else:
                 self.insert(player, current_node.left)
-        elif player.player_name > current_node.player.player_name:
+        elif player.player_name > current_node.player:
             if current_node.right is None:
                 current_node.right = PlayerBNode(player)
             else:
@@ -33,8 +34,3 @@ class PlayerBST:
         else:
             print(f"Player '{player.player_name}' already exists.")
             current_node.player = player
-
-
-player1 = Player(uid = "001", player_name = "Bulbasaur")
-bst = PlayerBST()
-bst.insert(player1)
