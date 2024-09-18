@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Optional
 
 from app.player import Player
 from app.player_bnode import PlayerBNode
@@ -42,16 +41,12 @@ class PlayerBST:
         if current_node is None:
             current_node = self.root
 
-        if current_node is None:
-            return None
+        name = name.lower()
 
-        name_lower = name.lower()
-        current_name_lower = current_node.player.player_name.lower()
-
-        if name_lower == current_name_lower:
+        if name == current_node.player.player_name.lower():
             return current_node.player
 
-        if name_lower < current_name_lower:
+        if name < current_node.player.player_name.lower():
             if current_node.left is not None:
                 return self.search(name, current_node.left)
             else:
@@ -62,44 +57,37 @@ class PlayerBST:
             else:
                 return None
 
-    def sort_list(self):
+    def sort_nodes_to_list(self) -> list[PlayerBNode]:
         """Creates a sorted list of PlayerBNode in Binary Search Tree"""
-        sorted_list = []
-        self.traverse(self.root, sorted_list)
-        print(sorted_list)
-        return sorted_list
+        def traverse(node) -> list[PlayerBNode]:
+            """Recursively traverses a Binary Search Tree and adds nodes to a list"""
+            if node is None:
+                return []
 
-    def traverse(self, node, sorted_list):
-        """Recursively traverses a Binary Search Tree and adds nodes to a list"""
-        if node is not None:
-            self.traverse(node.left, sorted_list)
-            sorted_list.append(node)
-            self.traverse(node.right, sorted_list)
+            return traverse(node.left) + [node] + traverse(node.right)
 
-    def create_balanced_binary_search_tree(self, sorted_list: list[PlayerBNode]) -> PlayerBNode | None:
-        """Creates a balanced BST from a sorted list of PlayerBNodes"""
-        sorted_list = self.sort_list()
+        return traverse(self.root)
 
-        if len(sorted_list) == 0:
+def create_balanced_bst(sorted_list: list[PlayerBNode]) -> PlayerBST | None:
+    """Creates a balanced BST from a sorted list of PlayerBNodes"""
+    if len(sorted_list) == 0:
+        return None
+
+    def assign_middle(sorted_nodes: list[PlayerBNode]) -> PlayerBNode | None:
+        """Recursively assigns left/right of the root node"""
+        if len(sorted_nodes) == 0:
             return None
 
-        middle_element = len(sorted_list) // 2
-        middle_node = sorted_list[middle_element]
+        middle_element = len(sorted_nodes) // 2
 
-        new_root = middle_node
+        middle_node = sorted_nodes[middle_element]
+        middle_node.left = assign_middle(sorted_nodes[:middle_element])
+        middle_node.right = assign_middle(sorted_nodes[middle_element + 1:])
 
-        new_root.left = self.create_balanced_binary_search_tree(sorted_list[:middle_element])
-        new_root.right = self.create_balanced_binary_search_tree(sorted_list[middle_element + 1:])
+        return middle_node
 
-        return new_root
+    bst_root = assign_middle(sorted_list)
+    new_bst = PlayerBST()
+    new_bst.root = bst_root
 
-
-if __name__ == '__main__':
-    player1 = Player("123","Rocky")
-    bst = PlayerBST()
-    bst.insert(player1)
-    bst.create_balanced_binary_search_tree()
-
-
-
-
+    return new_bst
