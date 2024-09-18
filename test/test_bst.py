@@ -32,6 +32,14 @@ class TestBST(unittest.TestCase):
         self.assertEqual(self.bst.root.left._player, self.player1)
         self.assertEqual(self.bst.root.right._player, self.player3)
 
+    def test_insert_existing(self):
+        self.bst.insert(player = self.player4)
+        self.bst.insert(player = self.player1)
+        self.bst.insert(player = self.player3)
+        player5 = Player(uid = "test", player_name = "Bulbasaur")
+        self.bst.insert(player = player5)
+        self.assertEqual(self.bst.root.left._player, player5)
+
     def test_multiple(self):
         players = [self.player1, self.player2, self.player3, self.player4]
         for player in players:
@@ -62,8 +70,22 @@ class TestBST(unittest.TestCase):
         self.bst.insert(self.player2)
         self.bst.insert(self.player3)
         self.bst.insert(self.player4)
+        self.bst.insert(Player(uid="063", player_name="Abra"))
 
-        sorted_nodes = self.bst.sorted_list()
+        sorted_nodes = self.bst.sort_list()
         sorted_names = [node.player.player_name for node in sorted_nodes]
         self.assertEqual(sorted_names, sorted(sorted_names))
+
+    def test_create_balanced_bst(self):
+        self.bst.insert(self.player1)
+        self.bst.insert(self.player2)
+        self.bst.insert(self.player3)
+        self.bst.insert(self.player4)
+        self.bst.insert(Player(uid="063", player_name="Abra"))
+        self.player5 = Player(uid="025", player_name="Pikachu")
+        self.player6 = Player(uid="007", player_name="Squirtle")
+        self.player7 = Player(uid="008", player_name="Wartortle")
+
+
+
 

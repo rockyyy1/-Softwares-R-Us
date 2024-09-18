@@ -19,7 +19,11 @@ class PlayerBST:
 
         current_node = _current_node or self.root
 
-        if player.player_name.lower() < current_node.player.player_name.lower():
+        if player.player_name.lower() == current_node.player.player_name.lower():
+            print(f"Updated '{player.player_name}'")
+            current_node.player = player
+            return
+        elif player.player_name.lower() < current_node.player.player_name.lower():
             if current_node.left is None:
                 current_node.left = PlayerBNode(player)
             else:
@@ -29,9 +33,6 @@ class PlayerBST:
                 current_node.right = PlayerBNode(player)
             else:
                 self.insert(player, current_node.right)
-        else:
-            print(f"Player '{player.player_name}' already exists.")
-            current_node.player = player
 
     def search(self, name : str, current_node : PlayerBNode | None = None) -> Player | None:
         """Searches for a player in the binary search tree"""
@@ -75,21 +76,20 @@ class PlayerBST:
             sorted_list.append(node)
             self.traverse(node.right, sorted_list)
 
-    def create_balanced_binary_search_tree(self) -> PlayerBNode:
+    def create_balanced_binary_search_tree(self, sorted_list: list[PlayerBNode]) -> PlayerBNode | None:
         """Creates a balanced BST from a sorted list of PlayerBNodes"""
         sorted_list = self.sort_list()
-        if not sorted_list:
+
+        if len(sorted_list) == 0:
             return None
 
-        pivot = len(sorted_list) // 2
-        mid_node = sorted_list[pivot]
+        middle_element = len(sorted_list) // 2
+        middle_node = sorted_list[middle_element]
 
-        # Create a new node with the middle node
-        new_root = PlayerBNode(mid_node.player)
+        new_root = middle_node
 
-        # Recursively create the left and right subtrees
-        new_root.left = self.create_balanced_binary_search_tree(sorted_list[:pivot])
-        new_root.right = self.create_balanced_binary_search_tree(sorted_list[pivot + 1:])
+        new_root.left = self.create_balanced_binary_search_tree(sorted_list[:middle_element])
+        new_root.right = self.create_balanced_binary_search_tree(sorted_list[middle_element + 1:])
 
         return new_root
 

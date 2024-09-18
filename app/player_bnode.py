@@ -36,18 +36,3 @@ class PlayerBNode:
     def __repr__(self) -> str:
         class_name = type(self).__name__
         return f'{class_name}({self.player.player_name})'
-
-    # def __lt__(self, other: PlayerBNode) -> bool:
-    #     if isinstance(other, PlayerBNode) or isinstance(other, str):
-    #         return self.player.player_name < other.player.player_name
-    #     return NotImplemented
-    #
-    # def __gt__(self, other: PlayerBNode) -> bool:
-    #     if isinstance(other, PlayerBNode) or isinstance(other, str):
-    #         return self.player.player_name > other.player.player_name
-    #     return NotImplemented
-    #
-    # def __eq__(self, other: object) -> bool:
-    #     if isinstance(other, PlayerBNode) or isinstance(other, str):
-    #         return self.player.player_name == other.player.player_name
-    #     return False
