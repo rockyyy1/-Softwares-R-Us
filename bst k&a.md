@@ -15,3 +15,6 @@ If no item is found, the algorithm returns a null/error or exception.
 
 # In your own words, describe what a balanced BST is.
 When the tree has a height difference between the left subtree and the right subtree of the root node and every node of 1 or less.
+
+# With the newly balanced BST, how many steps does it take at most to find an existing item in the search tree?
+Because it is balanced, each iteration cuts the number of items to search in half. So i think it should be OLog(n) where n is the number of nodes
